@@ -1,0 +1,276 @@
+ ‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
+ €                                                                            €
+ €                    <*>   DumpExe API version 2.5   <*>                     €
+ €                                                                            €
+ €                  by ‹ƒ‹ ‹   ‹ƒ‹ ‹ƒ‹ ‹ƒ‹ ‹ƒ‹ ‹ ‹ƒ‹ ‹ƒ‹                      €
+ €                     € € €ƒ‹ ﬂƒ‹ €ƒ  ﬂƒ‹ ﬂƒ‹ ‹ € € € €                      €
+ €                     € € € € ‹ € €   ‹ € ‹ € € € € € €                      €
+ €                     ﬂﬂﬂ ﬂﬂﬂ ﬂﬂﬂ ﬂﬂﬂ ﬂﬂﬂ ﬂﬂﬂ ﬂ ﬂﬂﬂ ﬂ ﬂ 1998                 €
+ €                                                                            €
+ €ƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒ€
+ € Handle  Real name         Age Profession E-Mail address   Group activity   €
+ €ƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒ€
+ € Bugsy   Benjamin Petersen  25 Programmer _bugsy@usa.net   Coder, organizer €
+ € Hendrix Patrick Enoch      22 Study Math _hendrix@usa.net Coder, unpackers €
+ € Spawn   Michael Skovslund  24 Programmer _spawn@usa.net   Coder, gfx       €
+ € Icicle  Henrik Eiriksson   25 Study IFA  _icicle@usa.net  Music, art       €
+ €ƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒ€
+ €                                                                            €
+ €  PLEASE CHECK OUT OUR INTERNET HOMEPAGE AT : home.t-online.de/home/enoch   €
+ €                                                                            €
+ ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
+
+
+INDEX
+  History
+  Introduction
+  Installing DumpExe API
+  Tutorial
+  Adding security
+  API documentation
+
+
+˛ History
+
+  Version   Release Note
+
+      2.4   First release of the API interface as requested by Dark Stalker.
+      2.5   Pentium safe code with Borland Pascal patch for runtime error 200
+
+
+˛ Introduction
+
+  By using DumpExe API you will be able to create your own unpackers. So why
+  would you do that when there are programs like CUP, UNP, TRON, and others ?
+  Lets first assume that Mr. X. has made an exepacker. This exepacker has
+  the ability to pack an exefile (make it smaller). This is good because
+  when you pack a file, it will fill less of your disk. It will also make it
+  secure (at least a bit secure). You cannot modify, let's say, a text string
+  that says who made the program, because the text is unreadable while in
+  its packed form. But only until Mr. Cracker makes an unpacker. Then everyone
+  can unpack the file and change it. So what does Mr. X. do ? He (or she)
+  makes a new packer which detects Mr. Crackers unpacker. Then Mr. Cracker
+  makes a new unpacker...... So what we need here is a unit that isn't
+  an unpacker, but still makes it easy to make one. This is what the DumpExe
+  API is about. It isn't an unpacker, just an interface that makes it easier
+  for you to make custom unpackers. Your job is to load and execute the packed
+  program until the VERY first original (unpacked) instruction of the program.
+  Then call DumpExe API a few times, and do it all over again one more time.
+  What you get from this is two dumps that represent an image of the unpacked
+  exefile. You need two dumps due to the nature of Exefiles, unlike comfiles
+  that only need one dump to rebuild a new com file. The next step in order
+  to create an unpacked exefile is to use the utility MakeExe. MakeExe will
+  then compare the two dumps and add a relocation to a relocation table for
+  every word it finds that doesn't match. At last MakeExe creates a new exefile
+  that centers all informations about the new exefile. You don't need to know
+  how this is done, all you need is to make a 'tracer' that detects when the
+  unpacker is finished unpacking the exefile in memory.
+
+
+˛ Introduction
+
+  To install the DumpExe API, just run DUMPAPI.EXE once. To uninstall it
+  just run DUMPAPI.EXE again. Remember to unsecure the session if you secured
+  it, or DumpExe API will just install itself again (twice).
+
+
+˛ Tutorial
+
+  To make use of the DumpExe API, you could follow this cookbook.
+
+   1. Execute DUMPAPI.EXE
+   2. Check for right DumpExe API version
+   3. Get DumpExe API address and secure session
+   4. Load packed exefile
+   5. Execute packed program until the very first unpacked instruction
+      ^ This is the tough part, all others steps are very easy. :-)
+
+   6. Fill registers inside DumpExe API
+   7. Autodetect size (by Stack or by PSP)
+   8. Dump memory using DumpExe API (part one)
+   9. Free packed programs environment
+  10. Shrink packed programs memory to 4 KB (and save a pointer)
+  11. Load packed exefile again
+  12. Execute packed program until the very first unpacked instruction
+  13. Dump memory using DumpExe API (part two)
+  14. Free packed programs environment
+  15. Free packed programs memory
+  16. Free shrinked programs memory
+  17. Unsecure DumpExe session
+  18. Unload DumpExe API
+  19. Execute MakeExe
+
+  That's all ;-)
+
+  It isn't as hard as it might sound. I have put a full featured unpacker,
+  and the source code for it, in this package. Check it out to learn more
+  about using DumpExe API and how it works. Oh, btw, remember to switch
+  current PSP every time you start and stop tracing a file.
+
+
+˛ Adding security
+
+  I have added a little security into the DumpExe API. When you call
+  'Get DumpExe API address and secure DumpExe session', DumpExe API
+  uninstalls ALL hooked interrupt vectors. Please see the example below
+  on how to use the 'Get DumpExe API address and secure DumpExe session' :
+
+;------------------------------------------------------------------------------
+
+  Proc        Doit
+    mov       ah, 00h
+    int       0fbh
+    cmp       bx, 0240h
+    jne       ErrorInVersion
+
+    mov       ah, 01h             ; Get API address and secure DumpExe session
+    int       0fbh
+    mov       word ptr APISeg, es
+    mov       word ptr APIOfs, di
+    ...
+    mov       ah, xxh
+    call      APIAddress
+    ...
+    mov       ah, 02h             ; Unsecure DumpExe session
+    call      APIAddress
+
+  ErrorInVersion:
+    ret
+  EndP        Doit
+
+;------------------------------------------------------------------------------
+
+  Proc        APIAddress
+              pushf               ; Emulate an interrupt call
+              db 9ah              ; call far xxxx:xxxx opcode
+  APIOfs:     dw 0
+  APISeg:     dw 0
+              ret
+  EndP        APIAddress
+
+;------------------------------------------------------------------------------
+
+  Just remember to call the 'Unsecure DumpExe API session' before you exit
+  your unpacker or you won't be able to uninstall the API.
+
+
+˛ API documentation
+
+ To call the DumpExe API you need to issue an INT 0FBh. Remember to fill
+ registers, as shown below, before calling INT 0FBh. Functions are demined
+ by register AH, and subfunction by AL.
+
+ ‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
+ € Get DumpExe API version                                                    €
+ €‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹€
+ € Input   : ah = 00h                                                         €
+ €                                                                            €
+ € Output  : bh = major version                                               €
+ €           bl = minor version                                               €
+ €                                                                            €
+ € Comment : Use this function to demind the DumpExe API version (0240h)      €
+ €                                                                            €
+ ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
+
+ ‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
+ € Get DumpExe API Address and secure session                                 €
+ €‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹€
+ € Input   : ah = 01h                                                         €
+ €                                                                            €
+ € Output  : es = segment of DumpExe API address                              €
+ €           di = offset of DumpExe API address                               €
+ €                                                                            €
+ € Comment : To make DumpExe API a bit more secure, please call this function.€
+ €                                                                            €
+ €     .----------------------------------------------------------------.     €
+ €     | PLEASE PUSH FLAGS BEFORE CALLING THE DumpExe API ADDRESS AFTER |     €
+ €     | THIS INTERRUPT CALL, SINCE YOU ARE USING THE INTERRUPT HANDLER.|     €
+ €     `----------------------------------------------------------------'     €
+ €                                                                            €
+ ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
+
+ ‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
+ € Unsecure DumpExe API session                                               €
+ €‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹€
+ € Input   : ah = 02h                                                         €
+ €                                                                            €
+ € Output  : None                                                             €
+ €                                                                            €
+ € Comment : Remember to CALL this function, before you exits your unpacker.  €
+ €           (Only if you are using the DumpExe API security)                 €
+ €                                                                            €
+ ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
+
+ ‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
+ € Fill DumpExe API registers                                                 €
+ €‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹€
+ € Input   : ah = 03h                                                         €
+ €           al = Dump number (1 = first dump, 2 = second dump)               €
+ €           ds:si -> DumpExeRegStructure Struc                               €
+ €                      _cs      dw     ?                                     €
+ €                      _ip      dw     ?                                     €
+ €                      _ss      dw     ?                                     €
+ €                      _sp      dw     ?                                     €
+ €                      _psp     dw     ?                                     €
+ €                    DumpExeRegStructure EndS                                €
+ €                                                                            €
+ € Output  : None                                                             €
+ €                                                                            €
+ € Comment : When you have executed the packed program, until the very first  €
+ €           original instruction, please call this function with the proper  €
+ €           register values, found at that moment. PSP is an alias for ES    €
+ €                                     ^^^^                                   €
+ ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
+
+ ‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
+ € Autodetect dump size                                                       €
+ €‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹€
+ € Input   : ah = 04h                                                         €
+ €           bl = Detection type. (1 = by PSP, 2 = by stack)                  €
+ €                                                                            €
+ € Output  : al = nonzero if error                                            €
+ €                                                                            €
+ € Comment : This function will autodetect the size for BOTH dumps. The most  €
+ €           common metode is by stack, since it usually gives smaller dumps. €
+ €                                                                            €
+ ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
+
+ ‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
+ € Set dump size                                                              €
+ €‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹€
+ € Input   : ah = 05h                                                         €
+ €           bx = Size in paragraphs (Round up : Size in bytes divided by 16) €
+ €                                                                            €
+ € Output  : None                                                             €
+ €                                                                            €
+ € Comment : If the autodetect function failes on both types, you can use     €
+ €           this function to set a size of your own choice.                  €
+ €                                                                            €
+ ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
+
+ ‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
+ € Dump exe-code                                                              €
+ €‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹€
+ € Input   : ah = 06h                                                         €
+ €           al = Dump number (1 = first dump, 2 = second dump)               €
+ €                                                                            €
+ € Output  : al = nonzero if error                                            €
+ €                                                                            €
+ ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
+
+ ‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
+ € Snapshot memory                                                            €
+ €‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹€
+ € Input   : ah = 07h                                                         €
+ €                                                                            €
+ € Output  : al = nonzero if error                                            €
+ €                                                                            €
+ € Comment : Take a snapshot of the first megabyte of memory and dump it into €
+ €           a file called SNAPSHOT.MEM. You can use this function to view if €
+ €           your unpacker/generic tracer works, and for a lot of other stuff.€
+ €                                                                            €
+ ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
+
+ That's it folks, that wasn't so bad after all wasn't it ?
+
+ [BUGSY/OBSESSiON]
